@@ -4,6 +4,7 @@ services:
     env: python
     buildCommand: |
       pip install -r requirements.txt
+      python manage.py collectstatic --noinput
     startCommand: |
       gunicorn weatherproject.wsgi:application
     envVars:
@@ -16,9 +17,9 @@ services:
       - key: ALLOWED_HOSTS
         value: .onrender.com
 
-staticAssets:
   - type: static
     name: staticfiles
-    buildCommand: |
-      python manage.py collectstatic --noinput
     staticPublishPath: staticfiles
+    buildCommand: |
+      pip install -r requirements.txt
+      python manage.py collectstatic --noinput
